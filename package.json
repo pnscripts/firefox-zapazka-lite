@@ -1,0 +1,17 @@
+{
+  "name": "zapazka-lite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Zapazka Lite: keeps what you type in text boxes in Firefox and gives it back after a crash or closed tab.",
+  "author": "PN Scripts <office@pnscripts.com> (https://pnscripts.com)",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "lint": "addons-linter extension",
+    "firefox": "node tools/firefox-check.mjs"
+  },
+  "devDependencies": {
+    "addons-linter": "10.14.0"
+  }
+}

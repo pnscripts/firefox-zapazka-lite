@@ -1,0 +1,69 @@
+{
+ "extName": {
+  "message": "Zapazka Lite"
+ },
+ "extDescription": {
+  "message": "Пази написаното в текстовите полета в този браузър, така че срив или затворен раздел да не го изтрият. Връщате го с едно щракване."
+ },
+ "actionTitle": {
+  "message": "Zapazka Lite: запазени текстове в този сайт"
+ },
+ "chipText": {
+  "message": "Да върна ли $P1$ знака от $P2$?",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   },
+   "p2": {
+    "content": "$2"
+   }
+  }
+ },
+ "restore": {
+  "message": "Върни"
+ },
+ "dismiss": {
+  "message": "Не сега"
+ },
+ "popupTitle": {
+  "message": "Запазено в този сайт"
+ },
+ "popupEmpty": {
+  "message": "Още няма нищо запазено тук. Пишете в текстово поле и написаното се пази, докато пишете."
+ },
+ "onThisPage": {
+  "message": "на тази страница"
+ },
+ "copy": {
+  "message": "Копирай"
+ },
+ "copied": {
+  "message": "Копирано"
+ },
+ "fill": {
+  "message": "Върни в полето"
+ },
+ "filled": {
+  "message": "Върнато в полето"
+ },
+ "notOnPage": {
+  "message": "Полето не е на тази страница; използвайте Копирай."
+ },
+ "delete": {
+  "message": "Изтрий"
+ },
+ "excludedHere": {
+  "message": "Този сайт е изключен."
+ },
+ "words": {
+  "message": "$P1$ думи",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   }
+  }
+ },
+ "liteFoot": {
+  "message": "Текстовите полета се пазят 7 дни. Пароли и частни прозорци никога."
+ }
+}

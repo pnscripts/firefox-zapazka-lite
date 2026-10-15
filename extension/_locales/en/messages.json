@@ -1,0 +1,69 @@
+{
+ "extName": {
+  "message": "Zapazka Lite"
+ },
+ "extDescription": {
+  "message": "Keeps what you type in text boxes in this browser, so a crash or a closed tab cannot take it. Restore it with one click."
+ },
+ "actionTitle": {
+  "message": "Zapazka Lite: texts kept on this site"
+ },
+ "chipText": {
+  "message": "Restore $P1$ characters from $P2$?",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   },
+   "p2": {
+    "content": "$2"
+   }
+  }
+ },
+ "restore": {
+  "message": "Restore"
+ },
+ "dismiss": {
+  "message": "Not now"
+ },
+ "popupTitle": {
+  "message": "Kept on this site"
+ },
+ "popupEmpty": {
+  "message": "Nothing kept on this site yet. Type in a text box and it is kept as you write."
+ },
+ "onThisPage": {
+  "message": "on this page"
+ },
+ "copy": {
+  "message": "Copy"
+ },
+ "copied": {
+  "message": "Copied"
+ },
+ "fill": {
+  "message": "Put back"
+ },
+ "filled": {
+  "message": "Put back in the field"
+ },
+ "notOnPage": {
+  "message": "That field is not on this page; use Copy."
+ },
+ "delete": {
+  "message": "Delete"
+ },
+ "excludedHere": {
+  "message": "This site is excluded."
+ },
+ "words": {
+  "message": "$P1$ words",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   }
+  }
+ },
+ "liteFoot": {
+  "message": "Text boxes are kept for 7 days. Passwords and private windows never."
+ }
+}
