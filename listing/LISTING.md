@@ -1,6 +1,8 @@
 # Zapazka Lite: Firefox Add-ons (addons.mozilla.org) submission
 
-Nothing has been submitted. The repository stays private until the coordinator publishes.
+Status 2026-10-15: the repository is **public** (https://github.com/pnscripts/firefox-zapazka-lite), GitHub release https://github.com/pnscripts/firefox-zapazka-lite/releases/tag/v1.0.0 with the same zip attached. Not yet on AMO (needs a browser sign-in).
+
+Steps (browser, Mozilla account on office@pnscripts.com): https://addons.mozilla.org/developers/ → Submit a New Add-on → **On this site** → upload `dist/zapazka-lite-1.0.0.zip` (or the release asset) → "Do you need to submit source code?" **No** → fill in the fields below → Submit Version. Do not accept anything beyond the AMO developer agreement the account already needs.
 
 - File: `dist/zapazka-lite-1.0.0.zip` (`make release`; addons-linter 0 errors / 0 warnings)
 - Source code upload: **No** (no minified or generated code; the zip is the extension folder)
