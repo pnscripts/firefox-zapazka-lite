@@ -7,7 +7,7 @@ Nothing has been submitted. The repository stays private until the coordinator p
 - Add-on ID: `zapazka-lite@pnscripts.com`; Firefox 142+ desktop; data collection declared `none`
 - Name: Zapazka Lite
 - Summary (≤ 250): Keeps what you type in text boxes, so a crash, a closed tab or an expired session cannot take it. Restore with one click. Never passwords, cards or private windows; nothing leaves your browser.
-- Categories: Privacy & Security? no: **Other** and **Tabs**? Use "Other" (form tools have no category); tags: forms, text, recovery, backup, crash
+- Categories: Other; tags: forms, text, recovery, backup, crash
 - Licence: MIT
 - Privacy policy: not needed (nothing is transmitted); texts stay in browser.storage.local
 - Support: https://pnscripts.com/marketplace/firefox-zapazka · office@pnscripts.com
