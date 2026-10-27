@@ -34,3 +34,12 @@ label.f input[type=number] { width: 80px; margin-left: 6px; }
 label.f textarea { width: 100%; min-height: 70px; font: inherit; margin-top: 4px; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; }
 label.c { display: flex; gap: 8px; align-items: center; margin: 8px 0; }
 .dim { color: var(--dim); }
+.rhead { display: flex; gap: 8px; align-items: baseline; padding: 8px 14px 4px; }
+.rhead .meta { margin-left: auto; color: var(--dim); font-size: 12px; text-align: right; }
+.rrow { display: flex; gap: 8px; align-items: baseline; margin: 0 14px; padding: 3px 0; border-bottom: 1px dotted var(--line); }
+.rrow .label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1 1 auto; min-width: 0; }
+.rrow .why { font-size: 12px; color: var(--dim); text-align: right; flex: 0 1 60%; }
+.rrow .why.ok { color: #1b7f4b; flex: none; }
+.rrow.refused .why { color: var(--bad); }
+@media (prefers-color-scheme: dark) { .rrow .why.ok { color: #6fd39b; } }
+.ledger .item .why { color: var(--bad); }

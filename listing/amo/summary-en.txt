@@ -1,0 +1,1 @@
+Keeps what you type in text boxes so a crash or closed tab cannot take it, and shows what it refuses: it also checks the text for card numbers, IBANs and keys. Nothing leaves your browser.

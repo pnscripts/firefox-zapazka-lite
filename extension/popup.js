@@ -34,6 +34,7 @@ async function render() {
   } catch (e) {
     here = [];
   }
+  await renderReport(tab, all, { ...C.DEFAULTS }, url);
   const prefix = url ? `z:${url.origin}` : '\u0000';
   const entries = Object.entries(all).filter(([k]) => k.startsWith(prefix + '/'))
     .sort(([ka, a], [kb, b]) => (here.includes(kb) - here.includes(ka)) || b.updated - a.updated);
@@ -41,6 +42,54 @@ async function render() {
   list.textContent = '';
   if (!entries.length) list.append(el('div', 'note', t('popupEmpty')));
   for (const [key, e] of entries) list.append(item(key, e, here.includes(key), tab));
+}
+
+// The page report: each text field on the page, kept or refused, and the reason.
+async function renderReport(tab, all, settings, url) {
+  const box = $('report');
+  box.textContent = '';
+  let rep = null;
+  try {
+    rep = await browser.tabs.sendMessage(tab.id, { type: 'zapazka-report' }, { frameId: 0 });
+  } catch (e) {
+    rep = null;
+  }
+  const head = el('div', 'rhead');
+  head.append(el('strong', '', t('reportTitle')));
+  box.append(head);
+  if (!rep) {
+    box.append(el('div', 'note', t('reportNone')));
+    return;
+  }
+  const off = !settings.enabled || (url && C.excluded(url.hostname, settings.excluded));
+  const kept = rep.rows.filter((r) => !r.reason);
+  const refused = rep.rows.filter((r) => r.reason);
+  head.append(el('span', 'meta', t('reportSummary', [String(off ? 0 : kept.length), String(refused.length), String(rep.ignored)])));
+  for (const r of rep.rows) {
+    const row = el('div', 'rrow');
+    row.append(el('span', 'label', r.label));
+    if (r.reason) {
+      row.classList.add('refused');
+      row.append(el('span', 'why', `${t('stRefused')}: ${t('r_' + r.reason)}`));
+    } else {
+      const e = all[r.key];
+      row.append(el('span', 'why ok', off ? t('stOff') : e ? t('stSaved', [String(e.versions.length)]) : t('stReady')));
+    }
+    box.append(row);
+  }
+  if (!rep.rows.length) box.append(el('div', 'note', t('reportEmpty')));
+  // Refusals recorded earlier on this site whose field is not on the page now (for example the text was cleared or sent).
+  const shown = new Set(rep.rows.filter((r) => r.reason).map((r) => `${r.label}|${r.reason}`));
+  const earlier = ((url && all[`l:${url.hostname}`]) || { items: [] }).items.filter((r) => !shown.has(`${r.field}|${r.reason}`));
+  if (earlier.length) {
+    box.append(el('div', 'rhead', t('ledgerHere')));
+    for (const r of earlier.slice(0, 8)) {
+      const row = el('div', 'rrow refused');
+      row.append(el('span', 'label', r.field || '…'));
+      row.append(el('span', 'why', `${t('stRefused')}: ${t('r_' + r.reason)} · ${C.ago(r.t, Date.now(), lang)}`));
+      box.append(row);
+    }
+  }
 }
 
 function item(key, e, onPage, tab) {

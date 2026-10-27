@@ -27,6 +27,8 @@ const SUBJECT = 'Question about partitioned tables';
 const RICH = 'Draft for Monday: release notes, then the migration checklist.';
 const SECRET = 'hunter2-not-kept';
 const CARD = '4111111111111111';
+// A support message that is not a "secret" field by name, with a valid card number and an IBAN inside the text.
+const MSG = 'Please refund my order 118. The card was 4111 1111 1111 1111 and the IBAN for the refund is BG80 BNBG 9661 1020 3456 78, thanks.';
 
 const PAGE = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Reply to: Faster imports with COPY</title><style>
 *{box-sizing:border-box} body{margin:0;font:16px/1.5 'Noto Sans','DejaVu Sans',sans-serif;color:#1f2933;background:#f5f7fa}
@@ -41,6 +43,7 @@ textarea{height:150px;resize:vertical} .ed{min-height:70px;border:1px solid #bcc
 <form onsubmit="return false">
 <label for="subject">Subject</label><input id="subject" name="subject" type="text">
 <label for="comment">Your reply</label><textarea id="comment" name="comment"></textarea>
+<label for="msg">Message to support</label><textarea id="msg" name="msg" style="height:70px"></textarea>
 <label>Notes for yourself</label><div class="ed" id="editor" contenteditable="true" aria-label="Notes for yourself"></div>
 <div class="two"><div><label for="password">Password</label><input id="password" name="password" type="password"></div>
 <div><label for="card">Card number</label><input id="card" name="card_number" type="text" autocomplete="cc-number"></div></div>
@@ -88,6 +91,8 @@ browser.storage.onChanged.addListener(async (ch) => {
     `user_pref("extensions.webextensions.uuids", ${JSON.stringify(JSON.stringify({ 'zapazka@pnscripts.com': UUID, 'zapazka-lite@pnscripts.com': UUID }))});`,
     'user_pref("browser.shell.checkDefaultBrowser", false);',
     'user_pref("datareporting.policy.dataSubmissionEnabled", false);',
+    'user_pref("media.volume_scale", "0.0");',
+    'user_pref("media.webspeech.synth.enabled", false);',
     `user_pref("intl.locale.requested", "${LANG === 'bg' ? 'bg' : 'en-US'}");`,
   ].join('\n'));
 
@@ -132,6 +137,7 @@ browser.storage.onChanged.addListener(async (ch) => {
     await field('#subject', SUBJECT);
     await field('#comment', COMMENT);
     await field('#editor', RICH);
+    await field('#msg', MSG);
     await field('#password', SECRET);
     await field('#card', CARD);
     await click(await centre('h1'));
@@ -160,11 +166,18 @@ browser.storage.onChanged.addListener(async (ch) => {
     const kept = Object.entries(store).filter(([k]) => k.startsWith('z:'));
     const texts = kept.map(([, e]) => e.versions.at(-1).text);
     if (!texts.includes(COMMENT)) throw new Error(`comment not kept: ${JSON.stringify(texts).slice(0, 300)}`);
-    if (kept.length !== 1) throw new Error(`Lite keeps text areas only, found ${kept.length}`);
+    if (kept.length !== 1) throw new Error(`Lite keeps text areas only, and the message with the card number is refused: found ${kept.length}`);
     ok('kept the comment box; the subject line and the rich editor are left to the full edition');
     const raw = JSON.stringify(store);
     if (raw.includes(SECRET) || raw.includes(CARD)) throw new Error('a password or card number was stored');
     ok('the password and the card number were not stored anywhere');
+    if (/4111|BG80|BNBG|9661/.test(raw)) throw new Error('part of the card number or the IBAN typed inside the message was stored');
+    ok('the card number and the IBAN typed inside a harmless-looking message were not stored, not even their first digits');
+    const ledger = Object.entries(store).filter(([k]) => k.startsWith('l:')).flatMap(([, v]) => v.items);
+    const reasons = ledger.map((r) => `${r.field}=${r.reason}`).sort();
+    if (!ledger.some((r) => r.reason === 'card' && r.field === 'Message to support')) throw new Error(`ledger lacks the card refusal: ${reasons}`);
+    if (!ledger.some((r) => r.field === 'Password') || !ledger.some((r) => r.field === 'Card number')) throw new Error(`ledger lacks the secret fields: ${reasons}`);
+    ok(`ledger records the refusals without any text: ${reasons.join(', ')}`);
 
     // As if the tab had been closed: open the page afresh (a new address, so Firefox's own form
     // restore on reload does not refill it), come back to the empty comment box.
@@ -197,6 +210,15 @@ browser.storage.onChanged.addListener(async (ch) => {
     await sleep(600);
     if ((await evalIn(page, "document.querySelector('#comment').value")) !== COMMENT) throw new Error('popup did not put the comment back');
     ok('the popup put the comment back into the box');
+    const repo = JSON.parse(await evalIn(popup, `JSON.stringify([...document.querySelectorAll('.rrow')].map((r) => r.textContent))`));
+    const refusedRows = repo.filter((r) => /refused|отказано/.test(r));
+    if (!repo.some((r) => /Message to support.*(card number|карта)/i.test(r))) throw new Error(`page report lacks the message refusal: ${JSON.stringify(repo)}`);
+    if (refusedRows.length < 3) throw new Error(`page report shows ${refusedRows.length} refusals: ${JSON.stringify(repo)}`);
+    ok(`page report in the popup: ${repo.length} fields, ${refusedRows.length} refused with a reason`);
+    const tabId = Number(new URLSearchParams(await evalIn(popup, 'location.search')).get('tab'));
+    const badge = await evalIn(popup, `browser.action.getBadgeText({ tabId: ${tabId} })`);
+    if (!/^[1-9]/.test(badge)) throw new Error(`toolbar badge is "${badge}"`);
+    ok(`toolbar badge shows ${badge} protected field`);
     writeFileSync(`${SHOTS}/popup.html`, await evalIn(popup, 'document.documentElement.outerHTML'));
     console.log(`Firefox check OK: ${pass} passed`);
   } catch (e) {

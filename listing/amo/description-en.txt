@@ -1,0 +1,27 @@
+Zapazka Lite keeps what you type in text boxes, so a crashed browser, a closed tab or an expired session cannot take a long reply with it. Come back to the empty box and press Restore, or put the text back from the toolbar button.
+
+NEW IN 1.1: IT CHECKS WHAT YOU TYPED, AND SHOWS WHAT IT REFUSES
+Other form-recovery add-ons skip a field only by its type or name. Zapazka Lite also reads the text: a card number (Luhn check), an IBAN, a private key, an API key or token, or "password: ..." typed into an ordinary message box is not kept. If the first digits of a card number were kept at a pause before the number was complete, they are removed again.
+
+And you can see it, instead of taking it on trust:
+- The toolbar popup lists every text box on the page as "kept as you type" or "refused", with the reason (for example "the text holds a valid card number").
+- Earlier refusals on the site are listed too: the field name and the reason, never the text.
+- The toolbar badge shows how many text boxes are protected on the page, or "off" on an excluded site, so you know it is watching before you need it.
+
+WHAT IT KEEPS
+- Text areas (the big reply and comment boxes), as you type, in this Firefox profile only, for 7 days.
+- Never password, card, security-code or one-time-code fields, fields named for tokens, PINs or secrets (also in Bulgarian: парола, ПИН, номер на карта, код за потвърждение), hidden, disabled or read-only fields, or anything in private windows.
+- Two sign-in sites are excluded from the start.
+
+HOW IT WORKS
+- Type as usual. About half a second after you stop, the text is saved locally.
+- Come back to the empty box: a small chip offers "Restore 228 characters from 2 h ago?". One click puts the text back and the page sees it as typed.
+- The toolbar popup lists the texts kept on the current site with Put back, Copy and Delete.
+
+PRIVATE
+No server, no account, no analytics, no network access. Texts are stored in Firefox's local extension storage, not encrypted, like Firefox's own form history. Uninstalling the add-on deletes everything it kept. Data collection declared to Mozilla: none.
+
+LITE AND FULL
+Zapazka Lite is complete for text boxes. The paid edition, Zapazka (https://pnscripts.com/marketplace/firefox-zapazka), also keeps rich editors and one-line fields, up to 50 versions per field, a searchable page of all kept texts, your own never-keep words and a refusal ledger across all sites.
+
+Needs Firefox 142 or newer on desktop. English and Bulgarian, following Firefox's language. Open source (MIT): https://github.com/pnscripts/firefox-zapazka-lite. Made by PN Scripts, with AI assistance; checked with 19 automated tests, Mozilla's addons-linter and a run in a real Firefox.

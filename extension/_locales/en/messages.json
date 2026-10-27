@@ -64,6 +64,73 @@
   }
  },
  "liteFoot": {
-  "message": "Text boxes are kept for 7 days. Passwords and private windows never."
+  "message": "Text boxes are kept for 7 days. Passwords, card numbers, keys and private windows never."
+ },
+ "reportTitle": {
+  "message": "On this page"
+ },
+ "reportNone": {
+  "message": "Zapazka cannot read this page (a browser page, or not loaded yet)."
+ },
+ "reportEmpty": {
+  "message": "No text fields on this page."
+ },
+ "reportSummary": {
+  "message": "$P1$ kept · $P2$ refused · $P3$ ignored",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   },
+   "p2": {
+    "content": "$2"
+   },
+   "p3": {
+    "content": "$3"
+   }
+  }
+ },
+ "stRefused": {
+  "message": "refused"
+ },
+ "stOff": {
+  "message": "not kept (paused or excluded)"
+ },
+ "stSaved": {
+  "message": "kept, $P1$ versions",
+  "placeholders": {
+   "p1": {
+    "content": "$1"
+   }
+  }
+ },
+ "stReady": {
+  "message": "kept as you type"
+ },
+ "ledgerHere": {
+  "message": "Refused earlier on this site"
+ },
+ "r_autocomplete": {
+  "message": "the page marks it as a password, card or code field"
+ },
+ "r_name": {
+  "message": "its name or label says password, card, code or secret"
+ },
+ "r_card": {
+  "message": "the text holds a valid card number"
+ },
+ "r_iban": {
+  "message": "the text holds a valid IBAN"
+ },
+ "r_privatekey": {
+  "message": "the text holds a private key"
+ },
+ "r_token": {
+  "message": "the text holds an API key or token"
+ },
+ "r_password": {
+  "message": "the text holds \"password: ...\""
+ },
+ "r_custom": {
+  "message": "the text holds a word from your never-keep list"
  }
 }
